@@ -25,10 +25,9 @@
             this.trigger = false;
 
             this.init = function(){
-                self = this;
+                var self = this;
                 this.show();
                 this.setListeners();
-                console.log(this.loop);
             };
 
             this.setListeners = function() {
@@ -50,21 +49,10 @@
                 });
             };
 
-            // returns true if an event has been bound to it
-            this.nextBound = function() {
-                return $._data(this.next[0],'events') ? true : false; 
-            };
-
-            // returns true if an event has been bound to it
-            this.prevBound = function() {
-                return $._data(this.prev[0],'events') ? true : false; 
-            };
-
             // sets previous button click handler
             this.setPrev = function(){
                 var self = this;
                 if(this.curSlide !== 0 && this.loop === false) {
-                    console.log('this bind');
                     this.prev.unbind('click').bind('click', function(e){
                         e.preventDefault();
                         self.moveSlide('back');
@@ -80,7 +68,11 @@
                     this.prev.unbind('click').bind('click', function(e){
                         e.preventDefault();
                         self.moveSlide('back');
-                        if(self.curSlide > 0) self.curSlide = self.curSlide - 1;
+                        if(self.curSlide === 0){ 
+                            //self.curSlide = self.curSlide;
+                        } else {
+                            self.curSlide = self.curSlide - 1;
+                        }
                         self.prevCallback();
                     });
                 } 
@@ -92,7 +84,7 @@
                 if(this.curSlide !== this.index && this.loop === false) {
                     this.next.unbind('click').bind('click', function(e){
                         e.preventDefault();
-                        self.moveSlide();
+                        self.moveSlide('forward');
                         if(self.curSlide !== self.index) self.curSlide = self.curSlide + 1;
                         self.nextCallback();
                         self.prev.removeClass('inactive');
@@ -104,10 +96,8 @@
                 if (this.loop === true) { 
                     this.next.unbind('click').bind('click', function(e){
                         e.preventDefault();
-                        self.moveSlide();
-                        if(self.curSlide < self.index && self.curSlide !== 0) {
-                            self.curSlide = self.curSlide + 1;
-                        }
+                        self.moveSlide('forward');
+                        self.curSlide = self.curSlide + 1
                         self.prevCallback();
                     });
                 }
@@ -148,15 +138,16 @@
                 var slide = $(this.slides[this.curSlide]);
                 var nextSlide = $(this.slides[this.curSlide + mod]);
 
+                //TODO not entirely sure this logic should be in the move function
                 if(this.loop === true) {
+                    if (this.curSlide === this.index && direction === 'forward') {
+                        nextSlide = $(this.slides[0]);
+                        this.curSlide = -1;
+                    }
                     if(this.curSlide === 0 && direction === 'back') {
                         nextSlide = $(this.slides[this.index]);
                         this.curSlide = this.index + 1;
                     } 
-                    if (this.curSlide === this.index) {
-                        nextSlide = $(this.slides[0]);
-                        this.curSlide = 0;
-                    }
                 }
 
                 this.unbindNext();
@@ -194,18 +185,6 @@
                     self.setNext();
                     self.setPrev();
                     self.endRender();
-                    //if(self.loop === true) { 
-                        //if (direction === undefined && self.curSlide === 0) {
-                            //self.curSlide = self.curSlide + 1;
-                            ////if(this.trigger === true){
-                                ////self.curSlide = 1;
-                                ////self.trigger = false;
-                            ////}
-                            ////self.trigger = true;
-                        //}
-                    //}
-                    //console.log(self.trigger);
-                    //console.log(self.curSlide);
                 });
             };
             this.init();
@@ -218,12 +197,10 @@ $('.slider').rSlider({
     next: '.next',
     prev: '.prev',
     start: 0,
-    loop: false,
+    loop: true,
     speed: 100,
     nextCallback: function() {
-        console.log('next callback worked');
     },
     prevCallback: function() {
-        console.log('prev callback worked');
     }
 });
