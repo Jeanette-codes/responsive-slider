@@ -71,7 +71,17 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* line 7, ../sass/app.scss */
-.slider {
+.slide-container {
+  position: relative;
+  width: 500px;
+  text-align: center;
+  overflow: visible;
+  background: #E1E1E1;
+  margin: 0 auto -2px auto;
+  height: 448px;
+}
+/* line 16, ../sass/app.scss */
+.slide-container .slider {
   position: relative;
   width: 500px;
   text-align: center;
@@ -80,28 +90,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   margin: 0 auto -2px auto;
   height: 448px;
 }
-
-/* line 16, ../sass/app.scss */
-img {
+/* line 25, ../sass/app.scss */
+.slide-container img {
   height: 448px;
   bottom: 0;
 }
-
-/* line 21, ../sass/app.scss */
-.slider ul {
+/* line 30, ../sass/app.scss */
+.slide-container .slider .main-area {
   margin: 0;
   padding: 0;
   word-spacing: 0;
 }
-
-/* line 26, ../sass/app.scss */
-.slider ul li {
+/* line 35, ../sass/app.scss */
+.slide-container .slider .main-area li {
   list-style-type: none;
   font-size: 12px;
 }
-
-/* line 30, ../sass/app.scss */
-.controls .next, .controls .prev {
+/* line 39, ../sass/app.scss */
+.slide-container .controls .next, .slide-container .controls .prev {
   position: absolute;
   top: 47%;
   width: 50px;
@@ -110,26 +116,22 @@ img {
   text-indent: -9999px;
   z-index: 2;
 }
-
-/* line 39, ../sass/app.scss */
-.controls .next {
+/* line 48, ../sass/app.scss */
+.slide-container .controls .next {
   right: 5px;
   background: url("../../img/arrow-right.png") no-repeat 0 0;
 }
-
-/* line 43, ../sass/app.scss */
-.controls .next.inactive, .controls .prev.inactive {
+/* line 52, ../sass/app.scss */
+.slide-container .controls .next.inactive, .slide-container .controls .prev.inactive {
   display: none;
 }
-
-/* line 46, ../sass/app.scss */
-.controls .prev {
+/* line 55, ../sass/app.scss */
+.slide-container .controls .prev {
   left: 5px;
   background: url("../../img/arrow-left.png") no-repeat 0 0;
 }
-
-/* line 51, ../sass/app.scss */
-.caption {
+/* line 60, ../sass/app.scss */
+.slide-container .caption {
   position: absolute;
   bottom: 0;
   background: green;
@@ -138,4 +140,18 @@ img {
   font-size: 15px;
   color: #fff;
   text-align: left;
+}
+/* line 71, ../sass/app.scss */
+.slide-container .slider-list-control .list-nav {
+  position: absolute;
+  bottom: -30px;
+}
+/* line 74, ../sass/app.scss */
+.slide-container .slider-list-control .list-nav li {
+  display: inline-block;
+  vertical-align: top;
+}
+/* line 77, ../sass/app.scss */
+.slide-container .slider-list-control .list-nav li a.active {
+  font-weight: bold;
 }
